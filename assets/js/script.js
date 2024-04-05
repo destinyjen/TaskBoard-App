@@ -14,9 +14,10 @@ function createTaskCard(task) {
    const taskDueDateEl = document.createElement("p");
    const taskDescriptionEl = document.createElement("p");
 
-   taskTitleEl.textContent = task.title
-   taskDueDateEl.textContent = task.dueDate
-   taskDescriptionEl.textContent = task.description
+   taskTitleEl.textContent = task.title;
+   taskDueDateEl.textContent = task.dueDate;
+   taskDescriptionEl.textContent = task.description;
+   
 }
 
 // Todo: create a function to render the task list and make cards draggable
