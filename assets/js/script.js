@@ -22,7 +22,6 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
-  console.log(task);
 
   const article = document.createElement("article");
   const taskTitleEl = document.createElement("h2");
@@ -45,8 +44,23 @@ return article;
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-    // Create the tasks with create taskcard
-    createTaskCard(newTask);
+  for (let index = 0; index < taskList.length; index++) {
+    const task = taskList[index];
+    const taskCard = createTaskCard(task);
+    // if the status is toDo put it in the toDo column
+    if (task.status === "toDo"){
+      document.getElementById("todo-cards").appendChild(taskCard)
+    }
+    // if the status is inProgress put it in the inProgress column
+    if (task.status === "inProgress"){
+      document.getElementById("in-progress-cards").appendChild(taskCard)
+    }
+    // if the status is done put it in the done column
+    if (task.status === "done"){
+      document.getElementById("done-cards").appendChild(taskCard)
+    }
+  }
+
 }
 
 // Todo: create a function to handle adding a new task
@@ -61,6 +75,7 @@ function handleAddTask(event) {
     title: taskTitle.value,
     dueDate: taskDuedate.value,
     description: taskDescription.value,
+    status: "toDo",
   };
   // Add it to the task list in local storage
   taskList.push(newTask);
@@ -78,15 +93,20 @@ function handleDeleteTask(event) {}
 function handleDrop(event, ui) {
   console.log(event)
   console.log(ui)
+  //update the status of the dropped task
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
+  renderTaskList();
   $("#task-due-date").datepicker();
   document
     .querySelector("#save-changes")
     .addEventListener("click", handleAddTask);
     $( ".lane" ).droppable({
-      drop: handleDrop
+      accept: '.draggable',
+      drop: handleDrop,
     });
+    // use mini project and documentation to configure dragging
+    $(".task-card").draggable();
 });
