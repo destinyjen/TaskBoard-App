@@ -15,43 +15,77 @@ function generateTaskId() {
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
+  // const article = $('<article>')
+  // .addClass('card task-card draggable my-3 task-card')
+  // .attr('data-task-id', task.id);
+
   const article = document.createElement("article");
   const taskTitleEl = document.createElement("h2");
   const taskDueDateEl = document.createElement("p");
   const taskDescriptionEl = document.createElement("p");
   const todoCards = document.getElementById("todo-cards");
 
-  article.classList.add("task-card");
+  article.classList.add('card', 'task-card', 'draggable', 'my-3', 'task-card');
+
+  article.dataset.taskid = task.id
 
   taskTitleEl.textContent = task.title;
   taskDueDateEl.textContent = task.dueDate;
   taskDescriptionEl.textContent = task.description;
 
-  article.appendChild(taskTitleEl);
-  article.appendChild(taskDueDateEl);
-  article.appendChild(taskDescriptionEl);
+  // article.appendChild(taskTitleEl);
+  // article.appendChild(taskDueDateEl);
+  // article.appendChild(taskDescriptionEl);
+
+  article.append(taskTitleEl, taskDueDateEl, taskDescriptionEl)
 
   return article;
 }
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
+
+  const todoList = $('#todo-cards');
+  todoList.empty();
+
+  const inProgressList = $('#in-progress-cards');
+  inProgressList.empty();
+
+  const doneList = $('#done-cards');
+  doneList.empty();
+
   for (let index = 0; index < taskList.length; index++) {
     const task = taskList[index];
     const taskCard = createTaskCard(task);
     // if the status is toDo put it in the toDo column
     if (task.status === "toDo") {
-      document.getElementById("todo-cards").appendChild(taskCard);
+      document.getElementById("todo-cards").append(taskCard);
     }
     // if the status is inProgress put it in the inProgress column
-    if (task.status === "inProgress"){
-      document.getElementById("in-progress-cards").appendChild(taskCard)
+    if (task.status === "in-progress"){
+      document.getElementById("in-progress-cards").append(taskCard)
     }
     // if the status is done put it in the done column
     if (task.status === "done"){
-      document.getElementById("done-cards").appendChild(taskCard)
+      document.getElementById("done-cards").append(taskCard)
     }
   }
+  $('.draggable').draggable({
+    opacity: 0.7,
+    zIndex: 100,
+    // ? This is the function that creates the clone of the card that is dragged. This is purely visual and does not affect the data.
+    helper: function (e) {
+      // ? Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
+      const original = $(e.target).hasClass('ui-draggable')
+        ? $(e.target)
+        : $(e.target).closest('.ui-draggable');
+      // ? Return the clone with the width set to the width of the original card. This is so the clone does not take up the entire width of the lane. This is to also fix a visual bug where the card shrinks as it's dragged to the right.
+      return original.clone().css({
+        width: original.outerWidth(),
+      });
+    },
+  });
+
 }
 
 // Todo: create a function to handle adding a new task
@@ -80,16 +114,21 @@ function handleDeleteTask(event) {}
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
-  $( "#draggable" ).draggable();
-  
-  $( "#droppable" ).droppable({
-    drop: function( event, ui ) {
-      $( this )
-        .addClass( "todo-cards" )
-        .find( "article" )
-          .html( "Dropped!" );
+
+  const tasks = JSON.parse(localStorage.getItem("tasks"))
+
+  const laneStatus = event.target.id
+  const taskId = ui.draggable[0].dataset.taskid; 
+
+  for (const task of tasks) {
+
+    if (task.id == taskId) {
+      task.status = laneStatus;
     }
-  });
+
+  }
+  localStorage.setItem("tasks", JSON.stringify(tasks))
+  renderTaskList()
 };
   // console.log(event);
   // console.log(ui);
