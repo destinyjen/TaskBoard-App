@@ -2,6 +2,7 @@
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
+
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
   if (nextId === null) {
@@ -24,6 +25,7 @@ function createTaskCard(task) {
   const taskDueDateEl = document.createElement("p");
   const taskDescriptionEl = document.createElement("p");
   const todoCards = document.getElementById("todo-cards");
+  const deleteBtn = document.createElement("button");
 
   article.classList.add('card', 'task-card', 'draggable', 'my-3', 'task-card');
 
@@ -32,12 +34,14 @@ function createTaskCard(task) {
   taskTitleEl.textContent = task.title;
   taskDueDateEl.textContent = task.dueDate;
   taskDescriptionEl.textContent = task.description;
-
+  deleteBtn.textContent = "Delete";
+  deleteBtn.dataset.taskid = task.id
+  deleteBtn.addEventListener("click", handleDeleteTask)
   // article.appendChild(taskTitleEl);
   // article.appendChild(taskDueDateEl);
   // article.appendChild(taskDescriptionEl);
 
-  article.append(taskTitleEl, taskDueDateEl, taskDescriptionEl)
+  article.append(taskTitleEl, taskDueDateEl, taskDescriptionEl, deleteBtn)
 
   return article;
 }
@@ -58,7 +62,7 @@ function renderTaskList() {
     const task = taskList[index];
     const taskCard = createTaskCard(task);
     // if the status is toDo put it in the toDo column
-    if (task.status === "toDo") {
+    if (task.status === "to-do") {
       document.getElementById("todo-cards").append(taskCard);
     }
     // if the status is inProgress put it in the inProgress column
@@ -100,7 +104,7 @@ function handleAddTask(event) {
     title: taskTitle.value,
     dueDate: taskDuedate.value,
     description: taskDescription.value,
-    status: "toDo",
+    status: "to-do",
   };
   // Add it to the task list in local storage
   taskList.push(newTask);
@@ -110,28 +114,42 @@ function handleAddTask(event) {
 }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event) {}
+function handleDeleteTask(event) {
+
+  // console.log(event.target)
+  // console.log(this)
+    const deleteBtnId = $(this).attr("data-taskid")
+    // console.log(deleteBtnId)
+
+    taskList = taskList.filter((task) => task.id != deleteBtnId)
+    // console.log(taskList)
+
+    localStorage.setItem("tasks", JSON.stringify(taskList))
+
+    renderTaskList();
+
+}
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+  console.log(event);
+  console.log(ui);
 
   const tasks = JSON.parse(localStorage.getItem("tasks"))
 
   const laneStatus = event.target.id
   const taskId = ui.draggable[0].dataset.taskid; 
 
-  for (const task of tasks) {
+  for (const task of taskList) {
 
     if (task.id == taskId) {
       task.status = laneStatus;
     }
 
   }
-  localStorage.setItem("tasks", JSON.stringify(tasks))
+  localStorage.setItem("tasks", JSON.stringify(taskList))
   renderTaskList()
 };
-  // console.log(event);
-  // console.log(ui);
   // // update the status of the dropped task
 
 
@@ -139,9 +157,7 @@ function handleDrop(event, ui) {
 $(document).ready(function () {
   renderTaskList();
   $("#task-due-date").datepicker();
-  document
-    .querySelector("#save-changes")
-    .addEventListener("click", handleAddTask);
+    $("#save-changes").on("click", handleAddTask);
   $(".lane").droppable({
     accept: '.draggable',
     drop: handleDrop,
