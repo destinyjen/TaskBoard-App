@@ -2,6 +2,11 @@
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
+// ? Helper function that displays the time, this is called every second in the setInterval function below.
+function displayTime() {
+  const rightNow = dayjs().format('MMM DD, YYYY [at] hh:mm:ss a');
+  timeDisplayEl.text(rightNow);
+}
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
@@ -40,8 +45,8 @@ function createTaskCard(task) {
   // article.appendChild(taskTitleEl);
   // article.appendChild(taskDueDateEl);
   // article.appendChild(taskDescriptionEl);
-
-  article.append(taskTitleEl, taskDueDateEl, taskDescriptionEl, deleteBtn)
+  article.append(taskTitleEl, taskDueDateEl, taskDescriptionEl, deleteBtn);
+  // taskCard.append(taskTitleEl,todoCards);
 
   return article;
 }
