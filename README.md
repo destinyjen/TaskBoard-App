@@ -46,10 +46,6 @@ The following image demonstrates the web application's appearance:
 
 # Specifications
 
-
-Navigate to Develop/assets/js/script.js and complete the tasks marked by TODO: comments.
-
-
 The app will be a single page, utilizing jQuery for dynamic content manipulation.
 
 
