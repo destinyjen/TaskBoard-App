@@ -36,10 +36,6 @@ It's done when the UI updates in real-time to reflect changes made to the projec
 It's done when projects are organized based on their status (e.g., To-do, In Progress, Done) and can be dragged between these statuses.
 
 
-It's done when the background color of each project dynamically changes based on its due date.
-
-
-
 # Assets
 The following image demonstrates the web application's appearance:
 ![alt text](assets/TaskBoardApp.png)
@@ -56,6 +52,3 @@ Projects will have attributes like id, name, type, dueDate, and status.
 
 
 The UI will feature draggable project cards for intuitive interaction.
-
-
-A live time display will be present, updating every second.
