@@ -50,13 +50,14 @@ function createTaskCard(task) {
     const now = dayjs();
     const taskDueDate = dayjs(task.dueDate, 'DD/MM/YYYY');
 
+  // Below is Jquery code that I am still working on fixing to work with Vanilla Javascript:
     // ? If the task is due today, make the card yellow. If it is overdue, make it red.
-  //   if (now.isSame(taskDueDate, 'day')) {
-  //     todoCards.addClass('bg-warning text-white');
-  //   } else if (now.isAfter(taskDueDate)) {
-  //     todoCards.addClass('bg-danger text-white');
-  //     deleteBtn.addClass('border-light');
-  //   }
+    // if (now.isSame(taskDueDate, 'day')) {
+    //   todoCards.addClass('bg-warning text-white');
+    // } else if (now.isAfter(taskDueDate)) {
+    //   todoCards.addClass('bg-danger text-white');
+    //   deleteBtn.addClass('border-light');
+    // }
   }
 
   article.append(taskTitleEl, taskDueDateEl, taskDescriptionEl, deleteBtn);

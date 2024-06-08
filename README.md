@@ -52,3 +52,4 @@ Projects will have attributes like id, name, type, dueDate, and status.
 
 
 The UI will feature draggable project cards for intuitive interaction.
+git
