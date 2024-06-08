@@ -44,7 +44,7 @@ It's done when the background color of each project dynamically changes based on
 The following image demonstrates the web application's appearance:
 ![alt text](assets/TaskBoardApp.png)
 
-Specifications
+# Specifications
 
 
 Navigate to Develop/assets/js/script.js and complete the tasks marked by TODO: comments.
