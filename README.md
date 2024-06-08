@@ -1,5 +1,5 @@
 # TaskBoard-App
-Module 5 Mini-Project: Interactive Project Management App
+This is an interactive Project Management App
 This mini-project involves building a front-end focused interactive project management application using jQuery, HTML, CSS, and client-side storage technologies. The app will enable users to organize and manage their projects efficiently.
 
 # User Stories
@@ -42,7 +42,7 @@ It's done when the background color of each project dynamically changes based on
 
 # Assets
 The following image demonstrates the web application's appearance:
-
+![alt text](<Screenshot 2024-06-08 at 9.21.14 AM.png>)
 
 Specifications
 
