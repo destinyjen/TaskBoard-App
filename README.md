@@ -42,7 +42,7 @@ It's done when the background color of each project dynamically changes based on
 
 # Assets
 The following image demonstrates the web application's appearance:
-![alt text](<Screenshot 2024-06-08 at 9.21.14 AM.png>)
+![alt text](assets/TaskBoardApp.png)
 
 Specifications
 
